@@ -1,0 +1,27 @@
+module lab3part1(LEDR,SW);
+
+input[9:0] SW;
+output[0:0] LEDR;
+
+reg hehe; // declare the output signal for the always block
+always @(*) // declare always block
+
+begin
+	
+	case (SW[9:7])
+	3'b000: hehe = SW[0];
+	3'b001: hehe = SW[1];
+	3'b010: hehe = SW[2];
+	3'b011: hehe = SW[3];
+	3'b100: hehe = SW[4];
+	3'b101: hehe = SW[5];
+	3'b110: hehe = SW[6];
+	default: hehe = 0;
+	
+	endcase
+
+	
+end
+
+assign LEDR[0] = hehe;
+endmodule
