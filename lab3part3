@@ -165,3 +165,107 @@ module mux2to1(x, y, s, m);
     assign m = s ? y : x;
 
 endmodule
+ 
+module hex_display_model(hex_input,hex_output);
+	input [3:0] hex_input;
+	output [6:0] hex_output;
+	
+	seven_h0 seg0(.C3(hex_input[3]),
+						.C2(hex_input[2]),
+						.C1(hex_input[1]),
+						.C0(hex_input[0]),
+						.H0(hex_output[0])
+						);
+						
+	seven_h1 seg1(.C3(hex_input[3]),
+						.C2(hex_input[2]),
+						.C1(hex_input[1]),
+						.C0(hex_input[0]),
+						.H1(hex_output[1])
+						);
+						
+	seven_h2 seg2(.C3(hex_input[3]),
+						.C2(hex_input[2]),
+						.C1(hex_input[1]),
+						.C0(hex_input[0]),
+						.H2(hex_output[2])
+						);
+
+	seven_h3 seg3(.C3(hex_input[3]),
+						.C2(hex_input[2]),
+						.C1(hex_input[1]),
+						.C0(hex_input[0]),
+						.H3(hex_output[3])
+						);
+	
+	seven_h4 seg4(.C3(hex_input[3]),
+						.C2(hex_input[2]),
+						.C1(hex_input[1]),
+						.C0(hex_input[0]),
+						.H4(hex_output[4])
+						);
+						
+	seven_h5 seg5(.C3(hex_input[3]),
+						.C2(hex_input[2]),
+						.C1(hex_input[1]),
+						.C0(hex_input[0]),
+						.H5(hex_output[5])
+						);
+						
+	seven_h6 seg6(.C3(hex_input[3]),
+						.C2(hex_input[2]),
+						.C1(hex_input[1]),
+						.C0(hex_input[0]),
+						.H6(hex_output[6])
+						);
+					
+endmodule
+
+module seven_h0(C3,C2,C1,C0,H0);
+	input C3,C2,C1,C0;
+	output H0;
+	assign H0 = ~((C3|C2|C1|(~C0))&(C3|(~C2)|C1|C0)&((~C3)|C2|(~C1)|(~C0))&(~C3|~C2|C1|~C0));
+
+endmodule
+
+module seven_h1(C3,C2,C1,C0,H1);
+	input C3,C2,C1,C0;
+	output H1;
+	assign H1 = ~((C3|~C2|C1|~C0)&(C3|~C2|~C1|C0)&(~C3|C2|~C1|~C0)&(~C3|~C2|C1|C0)&(~C3|~C2|~C1|C0)&(~C3|~C2|~C1|~C0));
+	
+endmodule
+
+module seven_h2(C3,C2,C1,C0,H2);
+	input C3,C2,C1,C0;
+	output H2;
+	assign H2 = ~((C3|C2|~C1|C0)&(~C3|~C2|C1|C0)&(~C3|~C2|~C1|C0)&(~C3|~C2|~C1|~C0));
+	
+endmodule
+
+module seven_h3(C3,C2,C1,C0,H3);
+	input C3,C2,C1,C0;
+	output H3;
+	assign H3 = ~((C3|C2|C1|~C0)&(C3|~C2|C1|C0)&(C3|~C2|~C1|~C0)&(~C3|C2|C1|~C0)&(~C3|C2|~C1|C0)&(~C3|~C2|~C1|~C0));
+	
+endmodule
+
+module seven_h4(C3,C2,C1,C0,H4);
+	input C3,C2,C1,C0;
+	output H4;
+	assign H4 = ~((C3|C2|C1|~C0)&(C3|C2|~C1|~C0)&(C3|~C2|C1|C0)&(C3|~C2|C1|~C0)&(C3|~C2|~C1|~C0)&(~C3|C2|C1|~C0));
+	
+endmodule
+
+module seven_h5(C3,C2,C1,C0,H5);
+	input C3,C2,C1,C0;
+	output H5;
+	assign H5 = ~((C3|C2|C1|~C0)&(C3|C2|~C1|C0)&(C3|C2|~C1|~C0)&(C3|~C2|~C1|~C0)&(~C3|~C2|C1|~C0));
+	
+endmodule
+
+module seven_h6(C3,C2,C1,C0,H6);
+	input C3,C2,C1,C0;
+	output H6;
+	assign H6 = ~((C3|C2|C1|C0)&(C3|C2|C1|~C0)&(C3|~C2|~C1|~C0)&(~C3|~C2|C1|C0));
+	
+endmodule
