@@ -1,0 +1,57 @@
+module lab3part2(LEDR, SW);
+		input [9: 0]SW;
+		output [9: 0]LEDR;
+		four_bit_adder u0(
+			.a0(SW[4]),
+			.a1(SW[5]),
+			.a2(SW[6]),
+			.a3(SW[7]),
+			.b0(SW[0]),
+			.b1(SW[1]),
+			.b2(SW[2]),
+			.b3(SW[3]),
+			.cin(SW[8]),
+			.s0(LEDR[0]),
+			.s1(LEDR[1]),
+			.s2(LEDR[2]),
+			.s3(LEDR[3]),
+			.cout(LEDR[9])
+			);
+endmodule
+
+module four_bit_adder(a0, a1, a2, a3, b0, b1, b2, b3, cin, s0, s1, s2, s3, cout);
+		input a0;
+		input a1;
+		input a2;
+		input a3;
+		input b0;
+		input b1;
+		input b2;
+		input b3;
+		input cin;
+		output s0;
+		output s1;
+		output s2;
+		output s3;
+		output cout;
+		wire w1;
+		wire w2;
+		wire w3;
+
+		ripple_adder r0(a0, b0, cin, s0, w1);
+		ripple_adder r1(a1, b1, w1, s1, w2);
+		ripple_adder r2(a2, b2, w2, s2, w3);
+		ripple_adder r3(a3, b3, w3, s3, cout);
+endmodule
+
+module ripple_adder(a, b, cin, s, cout);
+		input a;
+		input b;
+		input cin;
+		output s;
+		output cout;
+
+		assign cout = (~a & b & cin)|(a & ~b & cin)|(a & b & ~cin)|(a & b & cin);
+		assign s = (~a & ~b & cin)|(a & ~b & ~cin)|(~a & b & ~cin)|(a & b & cin);
+
+endmodule
